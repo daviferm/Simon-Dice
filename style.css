@@ -1,0 +1,151 @@
+body{
+	background: black;
+}
+.main{
+	width: 100%;
+}
+.h1{
+	margin: 100px auto 50px auto;
+	color: white;
+	text-align: center;
+	font-size: 2em;
+}
+
+.row{
+	border: 0px solid white;
+	position: relative;
+	width: 90%;
+	margin: 20px auto;
+	text-align: center;
+}
+.cell{
+	border: 3px solid white;
+	width: 60px;
+	height: 60px;
+	display: inline-block;
+	margin-left: 15px;
+	border-radius: 10px;
+	color: white;
+	vertical-align: middle;
+	cursor: pointer;
+}
+
+.cell p{
+	font-size: 2em;
+	margin-top: 15px;
+}
+#alert{
+	position: fixed;
+	width: 450px;
+	height: 200px;
+	top: 300px;
+	left: 50%;
+	margin-left: -230px;
+	border-radius: 10px;
+	background: #EDEDED;
+	text-align: center;
+	z-index: 100;
+	display: none;
+	-webkit-animation: 1s nivel .5;
+}
+figure img{
+	width: 150px;
+	float: left;
+	top: 50px;
+	display: none;
+}
+
+@-webkit-keyframes nivel{
+	0%{
+		opacity: 0;
+		display: none;
+		transform: scale(.4);
+	}
+	30%{
+		opacity: 1;
+		display: block;
+		transform: scale(1.1);
+	}
+	40%{
+		opacity: 1;
+		display: block;
+		transform: scale(.9);
+	}
+	45%{
+		opacity: 1;
+		display: block;
+		transform: scale(1);
+	}
+}
+#alert p{
+	margin-top: 40px;
+	font-size: 2em;
+	font-weight: bolder;
+}
+#alert button{
+	width: 100px;
+	height: 50px;
+	margin: auto;
+	border-radius: 5px;
+	background-color: #8CD4F5;
+	display: block;
+	cursor: pointer;
+	box-shadow: 2px 2px 2px gray,
+				3px 2px 3px gray,
+				4px 4px 4px gray;
+}
+
+#star{
+	position: relative;
+	left: 50%;
+	margin-left: -105px;
+	width: 210px;
+	height: 60px;
+	border-radius: 10px;
+	font-size: 1.3em;
+	background: #8CD4F5;
+	cursor: pointer;
+}
+#star:hover{
+	-webkit-transform: scale(1.1);
+	background-color: #7ecff4;
+}
+section{
+	position: relative;
+	width: 300px;
+	height: 50px;
+	text-align: center;
+	left: 50%;
+	margin-left: -160px;
+	font-size: 2em;
+	visibility: hidden;
+	opacity: 0;
+	transition-duration: .8s;
+}
+
+section p{
+	color: red;
+	margin: 0px;
+	padding: 0px;
+}
+.cell.active {
+	background-color: white;
+	color: black;
+}
+.cell.active.success {
+	background-color: #2ecc71;
+	color: white;
+	border-color: #2ecc71;
+}
+.cell.active.fail {
+	background-color: #e74c3c;
+	color: white;
+	border-color: #e74c3c;
+}
+
+
+
+
+
+
+
