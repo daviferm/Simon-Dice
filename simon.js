@@ -1,7 +1,15 @@
 
 const ALERT = document.getElementById('alert');
+const STAR = document.getElementById('star');
+const SELECTOR = document.getElementsByTagName('section')
 
-let niveles = 10;
+STAR.addEventListener("click", starGame);
+
+function starGame () {
+	siguienteNivel(0)
+}
+
+let niveles = 2;
 let teclas = generarTeclas(niveles);
 let t;
 let nivelAc;
@@ -10,10 +18,16 @@ let set = new Set()
 const arrTeclas = document.getElementsByClassName('cell');
 
 function save (Code) {
+	if(nivelAc >= niveles){
+		return swal( {
+			title: 'Ganaste',
+			type: 'success'
+		} );
+	}
 	array = [...set]
-	console.log(array[t])
+	console.log("array:  " +array[t])
+	console.log("code: "+Code)
 	if(Code == array[t]){
-		console.log("Code: "+Code)
 		activate(Code, {success: true})
 		t++;
 		if(t > nivelAc){
@@ -21,28 +35,57 @@ function save (Code) {
 		}
 	}else {
 			activate(Code, { fail: true });
-			setTimeout( () => alert("Perdiste :("), 500)
+			set.clear();
+			setTimeout( () => {
+				swal( {
+				title: 'Perdiste',
+				text: '¿Quieres jugar de nuevo?',
+				showCancelButton: true,
+				confirmButtonText: 'Si',
+				cancelButtonTextr: 'No',
+				closeOnConfirm: true
+			}, function (ok) {
+				if(ok){
+					teclas = generarTeclas(niveles);
+					siguienteNivel(0)
+				}
+			})
+			} , 500)
 			
 		}
 
 }
-document.addEventListener('keydown', (ev) =>{
-	console.log(ev.keyCode)
-})
+// document.addEventListener('keydown', (ev) =>{
+// 	console.log(ev.keyCode)
+// })
 
 function siguienteNivel (nivelAlcual) {
 	let nivelActual = nivelAlcual;
 	nivelAc = nivelActual;
-	if(nivelAlcual == niveles){
-		return alert("Ganaste");
+	if(nivelAlcual >= niveles){
+		return swal( {
+			title: 'Ganaste',
+			type: 'success',
+			imageUrl: 'images/thumbs-up.png'
+		} );
 	}
-	alert(`Nivel ${nivelAlcual + 1}`)
+	SELECTOR[0].style.opacity = 0;
+	swal( {
+		timer: 1500,
+		title: `Nivel ${nivelActual + 1}`,
+		showConfirmButton: false,
+		
+	} )
 
 	for(let i = 0; i <= nivelAlcual; i++){
 		setTimeout( () => {
+			SELECTOR[0].style.visibility = 'visible';
+			SELECTOR[0].style.opacity = 1;
+		},  1500 * (i+1))
+		setTimeout( () => {
 			activate(teclas[i]);
 			set.add(teclas[i]);
-		}, 1000 * (i+1))
+		}, 1000 * (i+1) + 1500)
 	}
 	let i = 0;
 	t = i;
@@ -65,12 +108,24 @@ function siguienteNivel (nivelAlcual) {
 		}else {
 			activate(ev.keyCode, { fail: true });
 			window.removeEventListener('keydown', onkeydown);
-			alert("Perdiste :(")
+			swal( {
+				title: 'Perdiste',
+				text: '¿Quieres jugar de nuevo?',
+				showCancelButton: true,
+				confirmButtonText: 'Si',
+				cancelButtonTextr: 'No',
+				closeOnConfirm: true
+			}, function (ok) {
+				if(ok){
+					teclas = generarTeclas(niveles);
+					siguienteNivel(0)
+				}
+			})
 		}
 	}
 
 }
-siguienteNivel(0)
+
 
 function aleatorio(){
 	const min = 65;
