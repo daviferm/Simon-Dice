@@ -9,7 +9,7 @@ function starGame () {
 	siguienteNivel(0)
 }
 
-let niveles = 2;
+let niveles = 12;
 let teclas = generarTeclas(niveles);
 let t;
 let nivelAc;
@@ -46,8 +46,11 @@ function save (Code) {
 				closeOnConfirm: true
 			}, function (ok) {
 				if(ok){
+					SELECTOR[0].style.opacity = 0;
 					teclas = generarTeclas(niveles);
 					siguienteNivel(0)
+				}else {
+					SELECTOR[0].style.opacity = 0;
 				}
 			})
 			} , 500)
@@ -70,12 +73,21 @@ function siguienteNivel (nivelAlcual) {
 		} );
 	}
 	SELECTOR[0].style.opacity = 0;
+	if(nivelActual == 0){
 	swal( {
 		timer: 1500,
 		title: `Nivel ${nivelActual + 1}`,
 		showConfirmButton: false,
 		
 	} )
+	}else {
+		swal( {
+		timer: 1500,
+		title: `Nivel ${nivelActual + 1}`,
+		showConfirmButton: false,
+		imageUrl: 'images/thumbs-up.png',
+	} )
+	}
 
 	for(let i = 0; i <= nivelAlcual; i++){
 		setTimeout( () => {
@@ -119,6 +131,8 @@ function siguienteNivel (nivelAlcual) {
 				if(ok){
 					teclas = generarTeclas(niveles);
 					siguienteNivel(0)
+				}else {
+					SELECTOR[0].style.opacity = 0;
 				}
 			})
 		}

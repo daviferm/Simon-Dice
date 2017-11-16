@@ -1,7 +1,8 @@
 body{
-	background: black;
+	background: #2A8487;
+	font-family: 'Permanent Marker', cursive;
 }
-.main{
+.main .contenedor{
 	width: 100%;
 }
 .h1{
@@ -14,25 +15,26 @@ body{
 .row{
 	border: 0px solid white;
 	position: relative;
-	width: 90%;
-	margin: 20px auto;
+	width: 100%;
+	margin: 5px 0px;
 	text-align: center;
 }
 .cell{
-	border: 3px solid white;
-	width: 60px;
-	height: 60px;
+	border: 2px solid white;
+	width: 50px;
+	height: 50px;
 	display: inline-block;
-	margin-left: 15px;
+	margin-left: 0px;
 	border-radius: 10px;
 	color: white;
 	vertical-align: middle;
 	cursor: pointer;
 }
 
-.cell p{
-	font-size: 2em;
-	margin-top: 15px;
+.cell p{font-family: sans-serif;
+
+	font-size: 1.4em;
+	margin-top: 18px;
 }
 #alert{
 	position: fixed;
@@ -104,6 +106,7 @@ figure img{
 	border-radius: 10px;
 	font-size: 1.3em;
 	background: #8CD4F5;
+	box-shadow: 0px 0px 10px black;
 	cursor: pointer;
 }
 #star:hover{
@@ -117,14 +120,15 @@ section{
 	text-align: center;
 	left: 50%;
 	margin-left: -160px;
-	font-size: 2em;
+	font-size: 1.8em;
 	visibility: hidden;
 	opacity: 0;
 	transition-duration: .8s;
 }
 
 section p{
-	color: red;
+	margin-top: 15px;
+	color: #171C21;
 	margin: 0px;
 	padding: 0px;
 }
@@ -141,6 +145,52 @@ section p{
 	background-color: #e74c3c;
 	color: white;
 	border-color: #e74c3c;
+}
+
+
+
+@media screen and (min-width: 767px){
+    body{
+        background: #2A8487;
+    }
+    .cell{
+		border: 2px solid white;
+		width: 62px;
+		height: 62px;
+		display: inline-block;
+		margin-left: 5px;
+		margin-bottom: 5px;
+		border-radius: 10px;
+		color: white;
+		vertical-align: middle;
+		cursor: pointer;
+	}
+	.cell p{
+		margin-top: 22px;
+	}
+
+@media screen and (min-width: 1050px){
+    body{
+        background: #2A8487;
+    }
+    .cell{
+		border: 2px solid white;
+		width: 76px;
+		height: 76px;
+		display: inline-block;
+		margin-left: 5px;
+		margin-bottom: 5px;
+		border-radius: 10px;
+		color: white;
+		vertical-align: middle;
+		cursor: pointer;
+	}
+	.cell p{
+		margin-top: 28px;
+		font-size: 1.8em;
+	}
+    
+    
 }
 
 
