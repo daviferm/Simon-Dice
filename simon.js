@@ -1,24 +1,35 @@
 
+
+// Solucionar error que provoca un error cuando se usa el teclado físico
+// despues de jugar una partida con el teclado virtual.
 const ALERT = document.getElementById('alert');
 const STAR = document.getElementById('star');
 const SELECTOR = document.getElementsByTagName('section');
 const NAME = document.getElementsByTagName('span');
 
-STAR.addEventListener("click", starGame);
+STAR.addEventListener("click", star);
 
-let niveles = 2;
+let niveles = 4;
 let dificultad;
 let teclas = generarTeclas(niveles);
 let t;
+let starGame;
+//La variable "reload" se pone false cuando se use el teclado virtual
+//para que no se produzca una error al pulsar el teclado físico. 
 let reload;
 let nivelAc;
 let array = [];
 let set = new Set();
 
+function star() {
+	if(starGame == undefined){
+		startGame();
+	}
+}
 
-function starGame () {
-	console.log('Dificultad: ' + dificultad);
-	reload = undefined;
+function startGame () {
+	starGame = true;
+
 	if(dificultad == 2){
 		swal( {
 			title: "Comienza Nivel 1",
@@ -32,54 +43,64 @@ function starGame () {
 				teclas = generarTeclas(niveles);
 				siguienteNivel(0)
 				SELECTOR[0].style.opacity = 0;
+				reload = undefined;
 			}else {
 				SELECTOR[0].style.opacity = 0;
+				starGame = undefined;
 			}
 		} )
 	}else {
-	swal({   
-		title: "Simon dice!",   
-		text: "Escribe tu nombre a continuación:",   
-		type: "input",   
-		showCancelButton: true,   
-		closeOnConfirm: false,   
-		animation: "slide-from-top",   
-		inputPlaceholder: "Tu nombre..." 
-		}, 
-		function(inputValue){   
-			if (inputValue === false) return false;      
-			if (inputValue === "") {     
-				swal.showInputError("Necesitas escribir un nombre válido!");     
-				return false   
-			} else {
-				swal( {
-					title: "Comienza Nivel 1",
-					text: "Bienvenido " + inputValue,
-					showCancelButton: true,
-					confirmButtonText: 'Si',
-					cancelButtonTextr: 'No',
-					closeOnConfirm: true
-				}, function (ok) {
-					if(ok){
-						teclas = generarTeclas(niveles);
-						siguienteNivel(0)
-						SELECTOR[0].style.opacity = 0;
-						NAME[0].textContent = inputValue
-					}else {
-						SELECTOR[0].style.opacity = 0;
-					}
-				} )
-		}     
-	});
+		swal({   
+			title: "Simon dice!",   
+			text: "Escribe tu nombre a continuación:",   
+			type: "input",   
+			showCancelButton: true,   
+			closeOnConfirm: false,   
+			animation: "slide-from-top",   
+			inputPlaceholder: "Tu nombre..." 
+			}, 
+			function(inputValue){   
+				if (inputValue === false) {
+					false;
+					starGame = undefined; 
+				}      
+				if (inputValue === "") {     
+					swal.showInputError("Necesitas escribir un nombre válido!");     
+					return false   
+				} else {
+					swal( {
+						title: "Comienza Nivel 1",
+						text: "Bienvenido " + inputValue,
+						showCancelButton: true,
+						confirmButtonText: 'Si',
+						cancelButtonTextr: 'No',
+						closeOnConfirm: true
+					}, function (ok) {
+						if(ok){
+							teclas = generarTeclas(niveles);
+							siguienteNivel(0)
+							SELECTOR[0].style.opacity = 0;
+							NAME[0].textContent = inputValue
+							reload = undefined;
+						}else {
+							SELECTOR[0].style.opacity = 0;
+						}
+					} )
+			}     
+		});
 		
 	}
 	
 }
 
 
-function save (Code) {
+function save(Code) {
 	
+	reload = false;
 	array = [...set]
+	if(dificultad == 2){
+		array = array.reverse()
+	}
 	if(Code == array[t]){
 		activate(Code, {success: true})
 		t++;
@@ -100,10 +121,17 @@ function save (Code) {
 		}, function (ok) {
 			if(ok){
 				SELECTOR[0].style.opacity = 0;
+				nivelAc = 0;
+				dificultad = undefined;
+				reload = undefined;
 				teclas = generarTeclas(niveles);
 				siguienteNivel(0)
+
 			}else {
 				SELECTOR[0].style.opacity = 0;
+				nivelAc = 0;
+				starGame = undefined;
+				dificultad = undefined;
 			}
 		})
 		} , 500)
@@ -115,11 +143,10 @@ function save (Code) {
 // 	console.log(ev.keyCode)
 // })
 
-function siguienteNivel (nivelAlcual) {
+function siguienteNivel (nivelActual) {
 	
-	let nivelActual = nivelAlcual;
 	nivelAc = nivelActual;
-	if(nivelAlcual >= niveles){
+	if(nivelActual >= niveles){
 		return swal( {
 			title: 'Ganaste',
 			type: 'success',
@@ -129,8 +156,13 @@ function siguienteNivel (nivelAlcual) {
 				SELECTOR[0].style.opacity = 0;
 				set.clear();
 				array = [];
-				reload = false;
-				dificultad = 2;
+				if(dificultad==undefined){
+					dificultad = 2;
+					starGame = undefined;
+				}else {
+					dificultad = undefined;
+					starGame = undefined;
+				}
 			}
 		} );
 	}
@@ -143,8 +175,8 @@ function siguienteNivel (nivelAlcual) {
 		imageUrl: 'images/thumbs-up.png',
 		} )
 	}
-
-	for(let i = 0; i <= nivelAlcual; i++){
+	console.log("nivel Actual: " + nivelActual)
+	for(let i = 0; i <= nivelActual; i++){
 		setTimeout( () => {
 			SELECTOR[0].style.visibility = 'visible';
 			SELECTOR[0].style.opacity = 1;
@@ -153,16 +185,27 @@ function siguienteNivel (nivelAlcual) {
 			activate(teclas[i]);
 			set.add(teclas[i]);
 		}, 1000 * (i+1) + 1500)
+		
 	}
 	
 	let i = 0;
 	t = i;
-	teclaActual = teclas[i];
+	if(dificultad == 2){
+		teclaActual = teclas[nivelActual - i]
+	}else {
+		teclaActual = teclas[i];
+	}
 
-	console.log('reload' + reload);
 	window.addEventListener('keydown', onkeydown);
 	
 	function onkeydown(ev) {
+		console.log("nivel Actual: "+ nivelActual)
+		console.log("tecla Actual: "+ teclaActual)
+		console.log("ev.keyCode: "+ ev.keyCode)
+		console.log("valor i: "+ i)
+		if(dificultad == 2){
+		teclaActual = teclas[nivelActual - i]
+		}
 		if(ev.keyCode == teclaActual && reload == undefined){
 			activate(teclaActual, {success: true})
 			i++
@@ -172,10 +215,12 @@ function siguienteNivel (nivelAlcual) {
 					1500)
 			}
 			teclaActual = teclas[i]
-		}else if(reload){
+		}else if(ev.keyCode != teclaActual && reload == undefined){
 
 			activate(ev.keyCode, { fail: true });
 			window.removeEventListener('keydown', onkeydown);
+			setTimeout( () => {
+
 			swal( {
 				title: 'Perdiste',
 				text: '¿Quieres jugar de nuevo?',
@@ -185,12 +230,16 @@ function siguienteNivel (nivelAlcual) {
 				closeOnConfirm: true
 			}, function (ok) {
 				if(ok){
+					reload = undefined;
 					teclas = generarTeclas(niveles);
 					siguienteNivel(0)
 				}else {
 					SELECTOR[0].style.opacity = 0;
+					reload = undefined;
+					starGame = undefined;
 				}
 			})
+			}, 600)
 		}
 	}
 
