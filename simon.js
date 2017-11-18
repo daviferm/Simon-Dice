@@ -24,6 +24,9 @@ let set = new Set();
 function star() {
 	if(starGame == undefined){
 		startGame();
+		STAR.textContent = 'Star Game';
+		STAR.style.backgroundColor = '#8CD4F5';
+		STAR.classList.add('startGame');
 	}
 }
 
@@ -48,7 +51,7 @@ function startGame () {
 				SELECTOR[0].style.opacity = 0;
 				starGame = undefined;
 			}
-		} )
+		})
 	}else {
 		swal({   
 			title: "Simon dice!",   
@@ -120,18 +123,24 @@ function save(Code) {
 			closeOnConfirm: true
 		}, function (ok) {
 			if(ok){
+				STAR.textContent = 'Star Game';
+				STAR.style.backgroundColor = '#8CD4F5';
+				STAR.classList.add('startGame');
 				SELECTOR[0].style.opacity = 0;
 				nivelAc = 0;
 				dificultad = undefined;
 				reload = undefined;
 				teclas = generarTeclas(niveles);
 				siguienteNivel(0)
-
 			}else {
+				STAR.textContent = 'Star Game';
+				STAR.style.backgroundColor = '#8CD4F5';
+				STAR.classList.add('startGame');
 				SELECTOR[0].style.opacity = 0;
 				nivelAc = 0;
 				starGame = undefined;
 				dificultad = undefined;
+				NAME[0].textContent = 'Simon';
 			}
 		})
 		} , 500)
@@ -153,6 +162,9 @@ function siguienteNivel (nivelActual) {
 			imageUrl: 'images/thumbs-up.png'
 		}, function(ok){
 			if(ok){
+				STAR.textContent = 'Next Game';
+				STAR.style.backgroundColor = '#FD6666';
+				STAR.classList.add('nextGame');
 				SELECTOR[0].style.opacity = 0;
 				set.clear();
 				array = [];
@@ -230,13 +242,24 @@ function siguienteNivel (nivelActual) {
 				closeOnConfirm: true
 			}, function (ok) {
 				if(ok){
+					STAR.textContent = 'Star Game';
+					STAR.style.backgroundColor = '#8CD4F5';
+					STAR.classList.add('startGame');
+					nivelAc = 0;
+					dificultad = undefined;
 					reload = undefined;
 					teclas = generarTeclas(niveles);
 					siguienteNivel(0)
+
 				}else {
 					SELECTOR[0].style.opacity = 0;
 					reload = undefined;
 					starGame = undefined;
+					nivelAc = 0;
+					dificultad = undefined;
+					STAR.textContent = 'Star Game';
+					STAR.style.backgroundColor = '#8CD4F5';
+					STAR.classList.add('startGame');
 				}
 			})
 			}, 600)
@@ -244,8 +267,6 @@ function siguienteNivel (nivelActual) {
 	}
 
 }
-
-
 function aleatorio(){
 	const min = 65;
 	const max = 90;
@@ -273,6 +294,31 @@ function generarTeclas (niveles) {
 	return new Array(niveles).fill(0).map(
 		aleatorio)
 }
+
+// Reloj
+let sec = 0;
+let min = 0;
+
+const MINS = document.querySelector('#min');
+const SECS = document.querySelector('#sec');
+
+function cronometro () {
+
+	setInterval( () => {
+		sec++
+		while (sec>=60) {
+			sec = 0;
+			min++
+			MINS.textContent = (min<10) ? '0'+min : min
+			
+			SECS.textContent = sec;
+		}
+		SECS.textContent = (sec<10) ? '0'+sec : sec 
+	}, 1000)
+
+}
+cronometro();
+
 
 
 
