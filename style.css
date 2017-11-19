@@ -21,7 +21,7 @@ body{
 }
 .cell{
 	border: 2px solid white;
-	width: 50px;
+	width: 70px;
 	height: 50px;
 	display: inline-block;
 	margin-left: 0px;
@@ -29,6 +29,10 @@ body{
 	color: white;
 	vertical-align: middle;
 	cursor: pointer;
+	font-family: serif;
+	font-size: 1.4em;
+	margin-top: 0px;
+	padding-top: 20px;
 }
 
 .cell p{font-family: sans-serif;

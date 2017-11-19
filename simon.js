@@ -6,20 +6,16 @@ const ALERT = document.getElementById('alert');
 const STAR = document.getElementById('star');
 const SELECTOR = document.getElementsByTagName('section');
 const NAME = document.getElementsByTagName('span');
+const BOARDKEYS = document.querySelectorAll('.cell');
+let boardkeyslength = BOARDKEYS.length;
 
 STAR.addEventListener("click", star);
 
-let niveles = 4;
+let niveles = 12;
 let dificultad;
 let teclas = generarTeclas(niveles);
-let t;
 let starGame;
-//La variable "reload" se pone false cuando se use el teclado virtual
-//para que no se produzca una error al pulsar el teclado físico. 
-let reload;
-let nivelAc;
 let array = [];
-let set = new Set();
 
 function star() {
 	if(starGame == undefined){
@@ -46,7 +42,6 @@ function startGame () {
 				teclas = generarTeclas(niveles);
 				siguienteNivel(0)
 				SELECTOR[0].style.opacity = 0;
-				reload = undefined;
 			}else {
 				SELECTOR[0].style.opacity = 0;
 				starGame = undefined;
@@ -84,7 +79,6 @@ function startGame () {
 							siguienteNivel(0)
 							SELECTOR[0].style.opacity = 0;
 							NAME[0].textContent = inputValue
-							reload = undefined;
 						}else {
 							SELECTOR[0].style.opacity = 0;
 						}
@@ -97,64 +91,9 @@ function startGame () {
 }
 
 
-function save(Code) {
-	
-	reload = false;
-	array = [...set]
-	if(dificultad == 2){
-		array = array.reverse()
-	}
-	if(Code == array[t]){
-		activate(Code, {success: true})
-		t++;
-		if(t > nivelAc){
-			setTimeout( () => siguienteNivel(t), 1000)
-		}
-	}else {
-		activate(Code, { fail: true });
-		set.clear();
-		setTimeout( () => {
-			swal( {
-			title: 'Has Perdido',
-			text: '¿Quieres jugar de nuevo?',
-			showCancelButton: true,
-			confirmButtonText: 'Si',
-			cancelButtonTextr: 'No',
-			closeOnConfirm: true
-		}, function (ok) {
-			if(ok){
-				STAR.textContent = 'Star Game';
-				STAR.style.backgroundColor = '#8CD4F5';
-				STAR.classList.add('startGame');
-				SELECTOR[0].style.opacity = 0;
-				nivelAc = 0;
-				dificultad = undefined;
-				reload = undefined;
-				teclas = generarTeclas(niveles);
-				siguienteNivel(0)
-			}else {
-				STAR.textContent = 'Star Game';
-				STAR.style.backgroundColor = '#8CD4F5';
-				STAR.classList.add('startGame');
-				SELECTOR[0].style.opacity = 0;
-				nivelAc = 0;
-				starGame = undefined;
-				dificultad = undefined;
-				NAME[0].textContent = 'Simon';
-			}
-		})
-		} , 500)
-			
-	}
-
-}
-// document.addEventListener('keydown', (ev) =>{
-// 	console.log(ev.keyCode)
-// })
 
 function siguienteNivel (nivelActual) {
 	
-	nivelAc = nivelActual;
 	if(nivelActual >= niveles){
 		return swal( {
 			title: 'Ganaste',
@@ -162,15 +101,15 @@ function siguienteNivel (nivelActual) {
 			imageUrl: 'images/thumbs-up.png'
 		}, function(ok){
 			if(ok){
-				STAR.textContent = 'Next Game';
-				STAR.style.backgroundColor = '#FD6666';
-				STAR.classList.add('nextGame');
+				
 				SELECTOR[0].style.opacity = 0;
-				set.clear();
 				array = [];
 				if(dificultad==undefined){
 					dificultad = 2;
 					starGame = undefined;
+					STAR.textContent = 'Next Game';
+					STAR.style.backgroundColor = '#FD6666';
+					STAR.classList.add('nextGame');
 				}else {
 					dificultad = undefined;
 					starGame = undefined;
@@ -187,7 +126,6 @@ function siguienteNivel (nivelActual) {
 		imageUrl: 'images/thumbs-up.png',
 		} )
 	}
-	console.log("nivel Actual: " + nivelActual)
 	for(let i = 0; i <= nivelActual; i++){
 		setTimeout( () => {
 			SELECTOR[0].style.visibility = 'visible';
@@ -195,41 +133,49 @@ function siguienteNivel (nivelActual) {
 		},  1500 * (i+1))
 		setTimeout( () => {
 			activate(teclas[i]);
-			set.add(teclas[i]);
 		}, 1000 * (i+1) + 1500)
 		
 	}
 	
 	let i = 0;
-	t = i;
 	if(dificultad == 2){
 		teclaActual = teclas[nivelActual - i]
 	}else {
 		teclaActual = teclas[i];
 	}
-
 	window.addEventListener('keydown', onkeydown);
 	
-	function onkeydown(ev) {
-		console.log("nivel Actual: "+ nivelActual)
-		console.log("tecla Actual: "+ teclaActual)
-		console.log("ev.keyCode: "+ ev.keyCode)
-		console.log("valor i: "+ i)
+	for(let y = 0; y < boardkeyslength; y++){
+		BOARDKEYS[y].addEventListener('click', click);
+	}
+	function click(ev){
+		console.log('ev '+ ev.target.innerHTML.toUpperCase().charCodeAt(0))
+		keyPressed(ev.target.innerHTML.toUpperCase().charCodeAt(0))
+	}
+	function onkeydown (ev) {
+    	keyPressed(ev.keyCode)
+  	}
+	
+	function keyPressed(key) {
 		if(dificultad == 2){
 		teclaActual = teclas[nivelActual - i]
 		}
-		if(ev.keyCode == teclaActual && reload == undefined){
+		if(key == teclaActual){
+			console.log('tecla actual: '+ teclaActual)
 			activate(teclaActual, {success: true})
 			i++
 			if (i > nivelActual){
 				window.removeEventListener('keydown', onkeydown);
+				for(let y = 0; y < boardkeyslength; y++){
+					BOARDKEYS[y].removeEventListener('click', click);
+				}
 				setTimeout( () => siguienteNivel(i),
 					1500)
 			}
 			teclaActual = teclas[i]
-		}else if(ev.keyCode != teclaActual && reload == undefined){
+		}else if(key != teclaActual){
 
-			activate(ev.keyCode, { fail: true });
+			activate(key, { fail: true });
 			window.removeEventListener('keydown', onkeydown);
 			setTimeout( () => {
 
@@ -245,17 +191,13 @@ function siguienteNivel (nivelActual) {
 					STAR.textContent = 'Star Game';
 					STAR.style.backgroundColor = '#8CD4F5';
 					STAR.classList.add('startGame');
-					nivelAc = 0;
 					dificultad = undefined;
-					reload = undefined;
 					teclas = generarTeclas(niveles);
 					siguienteNivel(0)
 
 				}else {
 					SELECTOR[0].style.opacity = 0;
-					reload = undefined;
 					starGame = undefined;
-					nivelAc = 0;
 					dificultad = undefined;
 					STAR.textContent = 'Star Game';
 					STAR.style.backgroundColor = '#8CD4F5';
@@ -296,29 +238,26 @@ function generarTeclas (niveles) {
 }
 
 // Reloj
-let sec = 0;
-let min = 0;
+// let sec = 0;
+// let min = 0;
 
-const MINS = document.querySelector('#min');
-const SECS = document.querySelector('#sec');
+// const MINS = document.querySelector('#min');
+// const SECS = document.querySelector('#sec');
 
-function cronometro () {
+// function cronometro () {
 
-	setInterval( () => {
-		sec++
-		while (sec>=60) {
-			sec = 0;
-			min++
-			MINS.textContent = (min<10) ? '0'+min : min
+// 	setInterval( () => {
+// 		sec++
+// 		while (sec>=60) {
+// 			sec = 0;
+// 			min++
+// 			MINS.textContent = (min<10) ? '0'+min : min
 			
-			SECS.textContent = sec;
-		}
-		SECS.textContent = (sec<10) ? '0'+sec : sec 
-	}, 1000)
+// 			SECS.textContent = sec;
+// 		}
+// 		SECS.textContent = (sec<10) ? '0'+sec : sec 
+// 	}, 1000)
 
-}
-cronometro();
-
-
-
+// }
+// cronometro();
 
