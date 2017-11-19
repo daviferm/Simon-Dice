@@ -1,15 +1,15 @@
 body{
-	background: #2A8487;
+	background: #336666;
 	font-family: 'Permanent Marker', cursive;
 }
 .main .contenedor{
 	width: 100%;
 }
 .h1{
-	margin: 100px auto 50px auto;
+	margin: 80px auto 40px auto;
 	color: white;
 	text-align: center;
-	font-size: 2em;
+	font-size: 1.5em;
 }
 
 .row{
@@ -40,20 +40,7 @@ body{
 	font-size: 1.4em;
 	margin-top: 18px;
 }
-#alert{
-	position: fixed;
-	width: 450px;
-	height: 200px;
-	top: 300px;
-	left: 50%;
-	margin-left: -230px;
-	border-radius: 10px;
-	background: #EDEDED;
-	text-align: center;
-	z-index: 100;
-	display: none;
-	-webkit-animation: 1s nivel .5;
-}
+
 figure img{
 	width: 150px;
 	float: left;
@@ -119,11 +106,9 @@ figure img{
 }
 section{
 	position: relative;
-	width: 300px;
+	width: 100%;
 	height: 50px;
 	text-align: center;
-	left: 50%;
-	margin-left: -160px;
 	font-size: 1.8em;
 	visibility: hidden;
 	opacity: 0;
@@ -155,12 +140,12 @@ section p{
 
 @media screen and (min-width: 767px){
     body{
-        background: #2A8487;
+        background: #336666;
     }
     .cell{
-		border: 2px solid white;
+		border: 3px solid white;
 		width: 62px;
-		height: 62px;
+		height: 42px;
 		display: inline-block;
 		margin-left: 5px;
 		margin-bottom: 5px;
@@ -168,18 +153,39 @@ section p{
 		color: white;
 		vertical-align: middle;
 		cursor: pointer;
+		padding-top: 30px;
+		font-size: 1.4em;
 	}
-	.cell p{
-		margin-top: 22px;
+	.h1{
+		font-size: 2em;
 	}
 
 @media screen and (min-width: 1050px){
     body{
-        background: #2A8487;
+        background: #336666;
     }
     .cell{
-		border: 2px solid white;
-		width: 76px;
+		border: 3px solid white;
+		width: 86px;
+		height: 56px;
+		display: inline-block;
+		margin-left: 5px;
+		margin-bottom: 5px;
+		border-radius: 10px;
+		color: white;
+		vertical-align: middle;
+		cursor: pointer;
+		padding-top: 32px;
+		font-size: 1.8em;
+	}
+}
+@media screen and (min-width: 1300px){
+	body{
+		background-color: #336666;
+	}
+	.cell{
+		border: 3px solid white;
+		width: 110px;
 		height: 76px;
 		display: inline-block;
 		margin-left: 5px;
@@ -188,13 +194,9 @@ section p{
 		color: white;
 		vertical-align: middle;
 		cursor: pointer;
-	}
-	.cell p{
-		margin-top: 28px;
+		padding-top: 36px;
 		font-size: 1.8em;
 	}
-    
-    
 }
 
 

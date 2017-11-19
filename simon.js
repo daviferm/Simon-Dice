@@ -1,8 +1,5 @@
 
 
-// Solucionar error que provoca un error cuando se usa el teclado físico
-// despues de jugar una partida con el teclado virtual.
-const ALERT = document.getElementById('alert');
 const STAR = document.getElementById('star');
 const SELECTOR = document.getElementsByTagName('section');
 const NAME = document.getElementsByTagName('span');
@@ -11,11 +8,11 @@ let boardkeyslength = BOARDKEYS.length;
 
 STAR.addEventListener("click", star);
 
-let niveles = 12;
+let niveles = 2;
 let dificultad;
 let teclas = generarTeclas(niveles);
 let starGame;
-let array = [];
+let messengeRepeat;
 
 function star() {
 	if(starGame == undefined){
@@ -28,11 +25,17 @@ function star() {
 
 function startGame () {
 	starGame = true;
-
+	let mensaje;
 	if(dificultad == 2){
-		swal( {
-			title: "Comienza Nivel 1",
-			text: "Pero ahora aumentamos la dificultad!!",
+		messengeRepeat = `Repite la secuencia al reves!!`
+		mensaje = 'Repite la secuencia al reves!!'
+	}else {
+		messengeRepeat = `Repite la secuencia`
+		mensaje = 'Repite la secuencia de letras!!'
+	}
+	swal( {
+			title: "Comienzando Nivel 1",
+			text: `${mensaje}`,
 			showCancelButton: true,
 			confirmButtonText: 'Si',
 			cancelButtonTextr: 'No',
@@ -47,47 +50,6 @@ function startGame () {
 				starGame = undefined;
 			}
 		})
-	}else {
-		swal({   
-			title: "Simon dice!",   
-			text: "Escribe tu nombre a continuación:",   
-			type: "input",   
-			showCancelButton: true,   
-			closeOnConfirm: false,   
-			animation: "slide-from-top",   
-			inputPlaceholder: "Tu nombre..." 
-			}, 
-			function(inputValue){   
-				if (inputValue === false) {
-					false;
-					starGame = undefined; 
-				}      
-				if (inputValue === "") {     
-					swal.showInputError("Necesitas escribir un nombre válido!");     
-					return false   
-				} else {
-					swal( {
-						title: "Comienza Nivel 1",
-						text: "Bienvenido " + inputValue,
-						showCancelButton: true,
-						confirmButtonText: 'Si',
-						cancelButtonTextr: 'No',
-						closeOnConfirm: true
-					}, function (ok) {
-						if(ok){
-							teclas = generarTeclas(niveles);
-							siguienteNivel(0)
-							SELECTOR[0].style.opacity = 0;
-							NAME[0].textContent = inputValue
-						}else {
-							SELECTOR[0].style.opacity = 0;
-						}
-					} )
-			}     
-		});
-		
-	}
-	
 }
 
 
@@ -107,8 +69,8 @@ function siguienteNivel (nivelActual) {
 				if(dificultad==undefined){
 					dificultad = 2;
 					starGame = undefined;
-					STAR.textContent = 'Next Game';
-					STAR.style.backgroundColor = '#FD6666';
+					STAR.textContent = 'Mas Dificil!';
+					STAR.style.backgroundColor = '#CC3366';
 					STAR.classList.add('nextGame');
 				}else {
 					dificultad = undefined;
@@ -128,6 +90,7 @@ function siguienteNivel (nivelActual) {
 	}
 	for(let i = 0; i <= nivelActual; i++){
 		setTimeout( () => {
+			SELECTOR[0].textContent = `${messengeRepeat}`
 			SELECTOR[0].style.visibility = 'visible';
 			SELECTOR[0].style.opacity = 1;
 		},  1500 * (i+1))
@@ -149,7 +112,6 @@ function siguienteNivel (nivelActual) {
 		BOARDKEYS[y].addEventListener('click', click);
 	}
 	function click(ev){
-		console.log('ev '+ ev.target.innerHTML.toUpperCase().charCodeAt(0))
 		keyPressed(ev.target.innerHTML.toUpperCase().charCodeAt(0))
 	}
 	function onkeydown (ev) {
@@ -157,11 +119,13 @@ function siguienteNivel (nivelActual) {
   	}
 	
 	function keyPressed(key) {
+		console.log('nivel actual: '+nivelActual)
+		console.log('tecla Actual: '+teclaActual)
+		console.log('key: '+key)
 		if(dificultad == 2){
 		teclaActual = teclas[nivelActual - i]
 		}
 		if(key == teclaActual){
-			console.log('tecla actual: '+ teclaActual)
 			activate(teclaActual, {success: true})
 			i++
 			if (i > nivelActual){
@@ -177,6 +141,9 @@ function siguienteNivel (nivelActual) {
 
 			activate(key, { fail: true });
 			window.removeEventListener('keydown', onkeydown);
+			for(let y = 0; y < boardkeyslength; y++){
+				BOARDKEYS[y].removeEventListener('click', click);
+			}
 			setTimeout( () => {
 
 			swal( {
@@ -194,7 +161,6 @@ function siguienteNivel (nivelActual) {
 					dificultad = undefined;
 					teclas = generarTeclas(niveles);
 					siguienteNivel(0)
-
 				}else {
 					SELECTOR[0].style.opacity = 0;
 					starGame = undefined;
@@ -260,4 +226,5 @@ function generarTeclas (niveles) {
 
 // }
 // cronometro();
+
 
