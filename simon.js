@@ -9,6 +9,7 @@ let boardkeyslength = BOARDKEYS.length;
 STAR.addEventListener("click", star);
 
 let niveles = 12;
+console.log(`Niveles: ${niveles} niveles`)
 let dificultad;
 let teclas = generarTeclas(niveles);
 let starGame;
