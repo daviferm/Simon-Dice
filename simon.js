@@ -8,7 +8,7 @@ let boardkeyslength = BOARDKEYS.length;
 
 STAR.addEventListener("click", star);
 
-let niveles = 2;
+let niveles = 12;
 let dificultad;
 let teclas = generarTeclas(niveles);
 let starGame;
@@ -30,7 +30,7 @@ function startGame () {
 		messengeRepeat = `Repite la secuencia al reves!!`
 		mensaje = 'Repite la secuencia al reves!!'
 	}else {
-		messengeRepeat = `Repite la secuencia`
+		messengeRepeat = `Repite la secuencia de letras!!`
 		mensaje = 'Repite la secuencia de letras!!'
 	}
 	swal( {
@@ -119,9 +119,6 @@ function siguienteNivel (nivelActual) {
   	}
 	
 	function keyPressed(key) {
-		console.log('nivel actual: '+nivelActual)
-		console.log('tecla Actual: '+teclaActual)
-		console.log('key: '+key)
 		if(dificultad == 2){
 		teclaActual = teclas[nivelActual - i]
 		}
