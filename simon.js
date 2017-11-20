@@ -35,7 +35,7 @@ function startGame () {
 		mensaje = 'Repite la secuencia de letras!!'
 	}
 	swal( {
-			title: "Comienzando Nivel 1",
+			title: `Comienzando Nivel 1 / ${niveles}`,
 			text: `${mensaje}`,
 			showCancelButton: true,
 			confirmButtonText: 'Si',
@@ -84,7 +84,7 @@ function siguienteNivel (nivelActual) {
 	if(nivelActual > 0){
 		swal( {
 		timer: 1500,
-		title: `Nivel ${nivelActual + 1}`,
+		title: `Nivel ${nivelActual + 1} / ${niveles}`,
 		showConfirmButton: false,
 		imageUrl: 'images/thumbs-up.png',
 		} )
