@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
 	<link href="https://fonts.googleapis.com/css?family=Permanent+Marker" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="dist/sweetalert.css">
 	<link rel="stylesheet" href="normalize.css">
 	<link rel="stylesheet" href="style.css">
+	<meta charset="UTF-8">
 	<title>Simon Dice</title>
 </head>
 <body>
+	<audio id="beep" src="clic.mp3" type="audio/mp3"  autoplay="true" autoplay></audio>
 	<div class="main">
 		
 		<div class="h1">
@@ -27,7 +28,7 @@
 				<div class="cell" data-key="73">i</div>
 				<div class="cell" data-key="79">o</div>
 				<div class="cell" data-key="80">p</div>
-			</dir>
+			</div>
 			<div class="row">
 				<div class="cell" data-key="65">a</div>
 				<div class="cell" data-key="83">s</div>
@@ -57,12 +58,12 @@
      	<input type="radio" name="modal" id="cerrar_modal">
      	<label for="cerrar_modal">x</label>
     	<div title="modal" id="modal">
-        <p>1- El juego inicia pulsando el boton "Star Game".</p><br>
-        <p>2- Consta principalmente de 12 niveles. En el primero se mostrara una secuencia de una letra y se irán añadiendo una letra más por cada nivel que se valla superando.</p>
-        <p>3- La función del jugador consiste en volver a repetir la secuencia de letras en cada nivel, utilizando las teclas del teclado físico o bien haciendo click en el teclado virtual.</p>
-        <p>4- Una vez superados los 12 niveles, se propone volver a realizar de nuevo los 12 niveles pero en este caso el jugador debera repetir la secuencia en sentido inverso al propuesto.</p>
-        <p>5- En el momento que se falle una vez se volverá a empezar desde el principio.</p>
-    </div>
+        	<p>1- El juego inicia pulsando el boton "Star Game".</p><br>
+        	<p>2- Consta principalmente de 12 niveles. En el primero se mostrara una secuencia de una letra y se irán añadiendo una letra más por cada nivel que se valla superando.</p>
+        	<p>3- La función del jugador consiste en volver a repetir la secuencia de letras en cada nivel, utilizando las teclas del teclado físico o bien haciendo click en el teclado virtual.</p>
+        	<p>4- Una vez superados los 12 niveles, se propone volver a realizar de nuevo los 12 niveles pero en este caso el jugador debera repetir la secuencia en sentido inverso al propuesto.</p>
+        	<p>5- En el momento que se falle una vez se volverá a empezar desde el principio.</p>
+    	</div>
 	</div>
 	
 	<script src="dist/sweetalert.min.js"></script> 

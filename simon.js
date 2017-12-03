@@ -5,6 +5,7 @@ const SELECTOR = document.getElementsByTagName('section');
 const NAME = document.getElementsByTagName('span');
 const BOARDKEYS = document.querySelectorAll('.cell');
 let boardkeyslength = BOARDKEYS.length;
+const BEEP = document.getElementById("beep");
 
 STAR.addEventListener("click", star);
 
@@ -113,9 +114,11 @@ function siguienteNivel (nivelActual) {
 		BOARDKEYS[y].addEventListener('click', click);
 	}
 	function click(ev){
+		BEEP.play();
 		keyPressed(ev.target.innerHTML.toUpperCase().charCodeAt(0))
 	}
 	function onkeydown (ev) {
+		BEEP.play();
     	keyPressed(ev.keyCode)
   	}
 	
