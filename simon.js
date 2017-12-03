@@ -9,7 +9,7 @@ const BEEP = document.getElementById("beep");
 
 STAR.addEventListener("click", star);
 
-let niveles = 12;
+let niveles = 10;
 console.log(`Niveles: ${niveles} niveles`)
 let dificultad;
 let teclas = generarTeclas(niveles);
