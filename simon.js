@@ -9,7 +9,7 @@ const BEEP = document.getElementById("beep");
 
 STAR.addEventListener("click", star);
 
-let niveles = 2;
+let niveles = 10;
 console.log(`Niveles: ${niveles} niveles`)
 let dificultad;
 let teclas = generarTeclas(niveles);
@@ -21,7 +21,6 @@ function star() {
 		startGame();
 		STAR.textContent = 'Star Game';
 		STAR.style.backgroundColor = '#8CD4F5';
-		STAR.classList.add('startGame');
 	}
 }
 
@@ -73,7 +72,6 @@ function siguienteNivel (nivelActual) {
 					starGame = undefined;
 					STAR.textContent = 'Mas Dificil!';
 					STAR.style.backgroundColor = '#CC3366';
-					STAR.classList.add('nextGame');
 				}else {
 					dificultad = undefined;
 					starGame = undefined;
@@ -81,6 +79,7 @@ function siguienteNivel (nivelActual) {
 			}
 		} );
 	}
+	console.log("nivel Actual: " + nivelActual);
 	SELECTOR[0].style.opacity = 0;
 	if(nivelActual > 0){
 		swal( {
@@ -115,11 +114,11 @@ function siguienteNivel (nivelActual) {
 	}
 	function click(ev){
 		BEEP.play();
-		keyPressed(ev.target.innerHTML.toUpperCase().charCodeAt(0))
+		keyPressed(ev.target.innerHTML.toUpperCase().charCodeAt(0));
 	}
 	function onkeydown (ev) {
 		BEEP.play();
-    	keyPressed(ev.keyCode)
+    	keyPressed(ev.keyCode);
   	}
 	
 	function keyPressed(key) {
