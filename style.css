@@ -130,10 +130,14 @@ body{
 	background: #8CD4F5;
 	box-shadow: 0px 0px 10px black;
 	cursor: pointer;
+	outline: none;
 }
 #star:hover{
-	-webkit-transform: scale(1.05);
-	background-color: #7ecff4;
+	/*-webkit-transform: scale(1.05);*/
+	background-color: #99FFFF;
+}
+#star:active{
+	transform: scale(.98);
 }
 section{
 	position: relative;

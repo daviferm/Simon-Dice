@@ -9,7 +9,7 @@ const BEEP = document.getElementById("beep");
 
 STAR.addEventListener("click", star);
 
-let niveles = 12;
+let niveles = 2;
 console.log(`Niveles: ${niveles} niveles`)
 let dificultad;
 let teclas = generarTeclas(niveles);
@@ -37,7 +37,7 @@ function startGame () {
 	}
 	swal( {
 			title: `Comienzando Nivel 1 / ${niveles}`,
-			text: `${mensaje}`,
+			text: `${messengeRepeat}`,
 			showCancelButton: true,
 			confirmButtonText: 'Si',
 			cancelButtonTextr: 'No',
